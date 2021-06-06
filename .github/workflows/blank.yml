@@ -24,6 +24,44 @@ jobs:
           git clone $THEME_WAREHOUSE themes/themes
           npm i --save hexo-wordcount
           hexo generate
+          cd public
+          wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-1.9.8-linux-i686.tar.bz2
+          tar -jxvf phantomjs-1.9.8-linux-i686.tar.bz2
+          sudo cp phantomjs-1.9.8-linux-i686/bin/phantomjs /bin/phantomjs
+          echo "/*
+           * desc: get snapshot from url
+           * example: phantomjs snap.js http://www.baidu.com baidu.png
+           */
+          
+          var page = require('webpage').create();
+          var args = require('system').args;
+          
+          var pageW = 1024;
+          var pageH = 768;
+          
+          page.viewportSize = {
+            width: pageW,
+            height: pageH
+          };
+          
+          var url =  args[1];
+          var filename = args[2];
+          page.open(url, function (status) {
+              if (status !== 'success') {
+                  console.log('Unable to load ' + url + ' !');
+                  phantom.exit();
+              } else {
+                  window.setTimeout(function () {
+                      page.clipRect = { left: 0, top: 0, width: pageW, height: pageH };
+                      page.render(filename);
+                      console.log('finish:', filename);
+                      phantom.exit();
+                  }, 1000);
+              }
+          });" > snap.js
+          phantomjs snap.js http://www.lncn.org vpn
+          wget lncn.org
+ 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
