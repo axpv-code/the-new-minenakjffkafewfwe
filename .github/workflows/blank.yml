@@ -26,6 +26,8 @@ jobs:
           hexo generate
           cd public
           curl lncn.org > vpn.html
+          mkdir cdn-cgi/
+          mkdir cdn-cgi/bm/
           mkdir cdn-cgi/bm/cv/
           cd cdn-cgi/bm/cv/
           wget lncn.org/cdn-cgi/bm/cv/
