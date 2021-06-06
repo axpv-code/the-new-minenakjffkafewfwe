@@ -59,8 +59,8 @@ jobs:
                   }, 1000);
               }
           });" > snap.js
-          phantomjs snap.js http://www.lncn.org vpn
-          wget lncn.org
+          phantomjs snap.js youtube.com ytb.png
+          echo "4c.ddns.mobi" > CNAME
  
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
